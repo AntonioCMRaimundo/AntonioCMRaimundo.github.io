@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Terminal com sudo — Ubuntu · ACMR</title>
+  <link rel="stylesheet" href="../../style.css">
+</head>
+<body>
+
+<header>
+  <a class="logo" href="../../index.html">
+    <img src="../../logo_ACMR.jpg" alt="ACMR Consultoria" height="48" style="border-radius:4px;">
+    <div class="logo-name">ACMR<span>Consultoria</span></div>
+  </a>
+  <nav>
+    <a href="../../index.html">Início</a>
+    <a href="../../suporte-remoto.html">Suporte Remoto</a>
+    <a href="../../procedimentos.html" class="active">Procedimentos</a>
+    <a href="../../referencias.html">Referências</a>
+  </nav>
+</header>
+
+<main>
+  <div class="breadcrumb">
+    <a href="../../procedimentos.html">Procedimentos</a>
+    <span>›</span>
+    <a href="../../procedimentos.html">Linux</a>
+    <span>›</span>
+    Terminal com privilégios de administrador
+  </div>
+
+  <h1>Terminal com privilégios de administrador — Ubuntu</h1>
+
+  <div class="card" style="margin-bottom:1.5rem;">
+    <p>No Ubuntu, não existe "Terminal como Administrador" como no Windows. O equivalente é usar o comando <code>sudo</code> antes de cada comando, ou abrir uma sessão de superusuário.</p>
+  </div>
+
+  <!-- Opção 1 -->
+  <div class="cmd-block">
+    <div class="cmd-header">
+      <div class="cmd-header-left">
+        <span class="cmd-step">Opção 1</span>
+        <span class="cmd-title">Usar sudo em um comando específico (recomendado)</span>
+      </div>
+      <button class="btn-copy" onclick="copiarComando(this)">Copiar</button>
+    </div>
+    <pre class="cmd-code">sudo [comando]</pre>
+  </div>
+  <p style="font-size:0.9rem;color:#555;margin:-0.25rem 0 1.25rem;padding:0.65rem 1rem;background:#f0f4ff;border-left:3px solid #12376B;border-radius:0 4px 4px 0;">
+    Executa apenas aquele comando como administrador. Exemplo: <code>sudo apt update</code>
+  </p>
+
+  <!-- Opção 2 -->
+  <div class="cmd-block">
+    <div class="cmd-header">
+      <div class="cmd-header-left">
+        <span class="cmd-step">Opção 2</span>
+        <span class="cmd-title">Abrir sessão completa como superusuário</span>
+      </div>
+      <button class="btn-copy" onclick="copiarComando(this)">Copiar</button>
+    </div>
+    <pre class="cmd-code">sudo -i</pre>
+  </div>
+  <p style="font-size:0.9rem;color:#555;margin:-0.25rem 0 1.25rem;padding:0.65rem 1rem;background:#f0f4ff;border-left:3px solid #12376B;border-radius:0 4px 4px 0;">
+    Abre um terminal com todos os comandos rodando como root. O prompt muda de <code>$</code> para <code>#</code>. Digite <code>exit</code> para voltar ao usuário normal. Use com cautela.
+  </p>
+
+  <!-- Opção 3 -->
+  <div class="cmd-block">
+    <div class="cmd-header">
+      <div class="cmd-header-left">
+        <span class="cmd-step">Opção 3</span>
+        <span class="cmd-title">Verificar se você tem permissão sudo</span>
+      </div>
+      <button class="btn-copy" onclick="copiarComando(this)">Copiar</button>
+    </div>
+    <pre class="cmd-code">sudo -l</pre>
+  </div>
+  <p style="font-size:0.9rem;color:#555;margin:-0.25rem 0 1.25rem;padding:0.65rem 1rem;background:#f0f4ff;border-left:3px solid #12376B;border-radius:0 4px 4px 0;">
+    Lista os comandos que seu usuário tem permissão de executar como sudo.
+  </p>
+
+  <!-- Opção 4 -->
+  <div class="cmd-block">
+    <div class="cmd-header">
+      <div class="cmd-header-left">
+        <span class="cmd-step">Opção 4</span>
+        <span class="cmd-title">Adicionar usuário ao grupo sudo (requer outro admin)</span>
+      </div>
+      <button class="btn-copy" onclick="copiarComando(this)">Copiar</button>
+    </div>
+    <pre class="cmd-code">sudo usermod -aG sudo [seu-usuario]</pre>
+  </div>
+  <p style="font-size:0.9rem;color:#555;margin:-0.25rem 0 1.25rem;padding:0.65rem 1rem;background:#f0f4ff;border-left:3px solid #12376B;border-radius:0 4px 4px 0;">
+    Necessário quando o usuário não tem permissão sudo. Requer logout e login para ter efeito.
+  </p>
+
+  <!-- Aviso -->
+  <div class="card" style="border-left:4px solid #d32f2f; background:#fff8f8; margin-top:1rem;">
+    <p><strong>&#9888; Atenção:</strong> Usar <code>sudo</code> incorretamente pode danificar o sistema. Sempre verifique o comando antes de executar.</p>
+  </div>
+
+</main>
+
+<footer>ACMR Consultoria &middot; Rio de Janeiro &middot; RJ</footer>
+
+<script>
+function copiarComando(btn) {
+  var code = btn.closest('.cmd-block').querySelector('.cmd-code');
+  navigator.clipboard.writeText(code.textContent.trim()).then(function () {
+    btn.textContent = 'Copiado!';
+    btn.classList.add('copied');
+    setTimeout(function () {
+      btn.textContent = 'Copiar';
+      btn.classList.remove('copied');
+    }, 2000);
+  });
+}
+</script>
+
+</body>
+</html>

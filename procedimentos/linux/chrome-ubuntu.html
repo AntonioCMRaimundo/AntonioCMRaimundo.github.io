@@ -11,7 +11,7 @@
 <header>
   <a class="logo" href="../../index.html">
     <img src="../../logo_ACMR.jpg" alt="ACMR Consultoria" height="48" style="border-radius:4px;">
-    <div class="logo-name">ACMR<span>Suporte de TI</span></div>
+    <div class="logo-name">ACMR<span>Consultoria</span></div>
   </a>
   <nav>
     <a href="../../index.html">Início</a>
@@ -42,11 +42,11 @@
     <div class="cmd-header">
       <div class="cmd-header-left">
         <span class="cmd-step">Passo 1</span>
-        <span class="cmd-title">Atualizar o sistema</span>
+        <span class="cmd-title">Atualizar a lista de pacotes</span>
       </div>
       <button class="btn-copy" onclick="copiarComando(this)">Copiar</button>
     </div>
-    <pre class="cmd-code">sudo apt update && sudo apt upgrade -y</pre>
+    <pre class="cmd-code">sudo apt update</pre>
   </div>
 
   <!-- Passo 2 -->
@@ -58,7 +58,7 @@
       </div>
       <button class="btn-copy" onclick="copiarComando(this)">Copiar</button>
     </div>
-    <pre class="cmd-code">sudo apt install -y wget curl gnupg2 apt-transport-https ca-certificates</pre>
+    <pre class="cmd-code">sudo apt install ca-certificates curl -y</pre>
   </div>
 
   <!-- Passo 3 -->
@@ -66,12 +66,11 @@
     <div class="cmd-header">
       <div class="cmd-header-left">
         <span class="cmd-step">Passo 3</span>
-        <span class="cmd-title">Baixar a chave de assinatura do Google</span>
+        <span class="cmd-title">Importar chave GPG do Google</span>
       </div>
       <button class="btn-copy" onclick="copiarComando(this)">Copiar</button>
     </div>
-    <pre class="cmd-code">wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | \
-  sudo gpg --dearmor -o /usr/share/keyrings/google-chrome.gpg</pre>
+    <pre class="cmd-code">curl -fsSL https://dl.google.com/linux/linux_signing_key.pub | sudo gpg --dearmor --yes -o /usr/share/keyrings/google-chrome.gpg</pre>
   </div>
 
   <!-- Passo 4 -->
@@ -79,13 +78,11 @@
     <div class="cmd-header">
       <div class="cmd-header-left">
         <span class="cmd-step">Passo 4</span>
-        <span class="cmd-title">Adicionar o repositório oficial</span>
+        <span class="cmd-title">Adicionar repositório oficial do Google Chrome</span>
       </div>
       <button class="btn-copy" onclick="copiarComando(this)">Copiar</button>
     </div>
-    <pre class="cmd-code">echo "deb [arch=amd64 signed-by=/usr/share/keyrings/google-chrome.gpg] \
-  http://dl.google.com/linux/chrome/deb/ stable main" | \
-  sudo tee /etc/apt/sources.list.d/google-chrome.list</pre>
+    <pre class="cmd-code">printf '%s\n' 'Types: deb' 'URIs: https://dl.google.com/linux/chrome/deb/' 'Suites: stable' 'Components: main' 'Architectures: amd64' 'Signed-By: /usr/share/keyrings/google-chrome.gpg' | sudo tee /etc/apt/sources.list.d/google-chrome.sources > /dev/null</pre>
   </div>
 
   <!-- Passo 5 -->
@@ -93,7 +90,7 @@
     <div class="cmd-header">
       <div class="cmd-header-left">
         <span class="cmd-step">Passo 5</span>
-        <span class="cmd-title">Atualizar a lista de pacotes</span>
+        <span class="cmd-title">Atualizar APT com novo repositório</span>
       </div>
       <button class="btn-copy" onclick="copiarComando(this)">Copiar</button>
     </div>
@@ -105,11 +102,11 @@
     <div class="cmd-header">
       <div class="cmd-header-left">
         <span class="cmd-step">Passo 6</span>
-        <span class="cmd-title">Instalar o Google Chrome Stable</span>
+        <span class="cmd-title">Verificar se o pacote está disponível</span>
       </div>
       <button class="btn-copy" onclick="copiarComando(this)">Copiar</button>
     </div>
-    <pre class="cmd-code">sudo apt install -y google-chrome-stable</pre>
+    <pre class="cmd-code">apt-cache policy google-chrome-stable</pre>
   </div>
 
   <!-- Passo 7 -->
@@ -117,11 +114,11 @@
     <div class="cmd-header">
       <div class="cmd-header-left">
         <span class="cmd-step">Passo 7</span>
-        <span class="cmd-title">Verificar a versão instalada</span>
+        <span class="cmd-title">Instalar o Google Chrome</span>
       </div>
       <button class="btn-copy" onclick="copiarComando(this)">Copiar</button>
     </div>
-    <pre class="cmd-code">google-chrome --version</pre>
+    <pre class="cmd-code">sudo apt install google-chrome-stable -y</pre>
   </div>
 
   <!-- Passo 8 -->
@@ -129,11 +126,11 @@
     <div class="cmd-header">
       <div class="cmd-header-left">
         <span class="cmd-step">Passo 8</span>
-        <span class="cmd-title">Localizar o executável</span>
+        <span class="cmd-title">Verificar versão instalada</span>
       </div>
       <button class="btn-copy" onclick="copiarComando(this)">Copiar</button>
     </div>
-    <pre class="cmd-code">which google-chrome</pre>
+    <pre class="cmd-code">google-chrome --version</pre>
   </div>
 
   <!-- Passo 9 -->
@@ -145,7 +142,29 @@
       </div>
       <button class="btn-copy" onclick="copiarComando(this)">Copiar</button>
     </div>
-    <pre class="cmd-code">google-chrome &</pre>
+    <pre class="cmd-code">google-chrome</pre>
+  </div>
+
+  <!-- Instalação automática -->
+  <h2>Instalação automática via script</h2>
+
+  <div class="card" style="margin-bottom:1rem;">
+    <p>Baixe e execute o script para instalar o Chrome automaticamente, sem copiar e colar comandos.</p>
+  </div>
+
+  <div class="cmd-block">
+    <div class="cmd-header">
+      <div class="cmd-header-left">
+        <span class="cmd-step">Script</span>
+        <span class="cmd-title">Executar instalação automática</span>
+      </div>
+      <button class="btn-copy" onclick="copiarComando(this)">Copiar</button>
+    </div>
+    <pre class="cmd-code">bash &lt;(curl -fsSL https://ti.raimundo.com.br/scripts/instalar_chrome_ubuntu2404.sh)</pre>
+  </div>
+
+  <div class="card" style="margin-top:0.75rem; border-left:4px solid var(--accent);">
+    <p><strong>Nota:</strong> O script verifica a arquitetura, detecta conflitos e exibe o progresso em cada etapa.</p>
   </div>
 
 </main>
