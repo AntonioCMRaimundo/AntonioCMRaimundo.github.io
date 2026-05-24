@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chrome no Ubuntu 24.04 · ACMR</title>
+  <link rel="stylesheet" href="../../style.css">
+</head>
+<body>
+
+<header>
+  <a class="logo" href="../../index.html">
+    <div class="logo-block">AC<br>MR</div>
+    <div class="logo-name">ACMR<span>Suporte de TI</span></div>
+  </a>
+  <nav>
+    <a href="../../index.html">Início</a>
+    <a href="../../suporte-remoto.html">Suporte Remoto</a>
+    <a href="../../procedimentos.html" class="active">Procedimentos</a>
+    <a href="../../referencias.html">Referências</a>
+  </nav>
+</header>
+
+<main>
+  <div class="breadcrumb">
+    <a href="../../procedimentos.html">Procedimentos</a>
+    <span>›</span>
+    <a href="../../procedimentos.html">Linux</a>
+    <span>›</span>
+    Chrome no Ubuntu 24.04
+  </div>
+
+  <h1>Google Chrome no Ubuntu 24.04 LTS</h1>
+
+  <div class="card" style="margin-bottom:1.5rem;">
+    <p>Instalação do Google Chrome via repositório oficial do Google, garantindo atualizações automáticas pelo <code>apt</code>.</p>
+    <p><strong>Requisitos:</strong> Ubuntu 24.04 LTS (Noble Numbat) · 64 bits · acesso <code>sudo</code></p>
+  </div>
+
+  <!-- Passo 1 -->
+  <div class="cmd-block">
+    <div class="cmd-header">
+      <div class="cmd-header-left">
+        <span class="cmd-step">Passo 1</span>
+        <span class="cmd-title">Atualizar o sistema</span>
+      </div>
+      <button class="btn-copy" onclick="copiarComando(this)">Copiar</button>
+    </div>
+    <pre class="cmd-code">sudo apt update && sudo apt upgrade -y</pre>
+  </div>
+
+  <!-- Passo 2 -->
+  <div class="cmd-block">
+    <div class="cmd-header">
+      <div class="cmd-header-left">
+        <span class="cmd-step">Passo 2</span>
+        <span class="cmd-title">Instalar dependências</span>
+      </div>
+      <button class="btn-copy" onclick="copiarComando(this)">Copiar</button>
+    </div>
+    <pre class="cmd-code">sudo apt install -y wget curl gnupg2 apt-transport-https ca-certificates</pre>
+  </div>
+
+  <!-- Passo 3 -->
+  <div class="cmd-block">
+    <div class="cmd-header">
+      <div class="cmd-header-left">
+        <span class="cmd-step">Passo 3</span>
+        <span class="cmd-title">Baixar a chave de assinatura do Google</span>
+      </div>
+      <button class="btn-copy" onclick="copiarComando(this)">Copiar</button>
+    </div>
+    <pre class="cmd-code">wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | \
+  sudo gpg --dearmor -o /usr/share/keyrings/google-chrome.gpg</pre>
+  </div>
+
+  <!-- Passo 4 -->
+  <div class="cmd-block">
+    <div class="cmd-header">
+      <div class="cmd-header-left">
+        <span class="cmd-step">Passo 4</span>
+        <span class="cmd-title">Adicionar o repositório oficial</span>
+      </div>
+      <button class="btn-copy" onclick="copiarComando(this)">Copiar</button>
+    </div>
+    <pre class="cmd-code">echo "deb [arch=amd64 signed-by=/usr/share/keyrings/google-chrome.gpg] \
+  http://dl.google.com/linux/chrome/deb/ stable main" | \
+  sudo tee /etc/apt/sources.list.d/google-chrome.list</pre>
+  </div>
+
+  <!-- Passo 5 -->
+  <div class="cmd-block">
+    <div class="cmd-header">
+      <div class="cmd-header-left">
+        <span class="cmd-step">Passo 5</span>
+        <span class="cmd-title">Atualizar a lista de pacotes</span>
+      </div>
+      <button class="btn-copy" onclick="copiarComando(this)">Copiar</button>
+    </div>
+    <pre class="cmd-code">sudo apt update</pre>
+  </div>
+
+  <!-- Passo 6 -->
+  <div class="cmd-block">
+    <div class="cmd-header">
+      <div class="cmd-header-left">
+        <span class="cmd-step">Passo 6</span>
+        <span class="cmd-title">Instalar o Google Chrome Stable</span>
+      </div>
+      <button class="btn-copy" onclick="copiarComando(this)">Copiar</button>
+    </div>
+    <pre class="cmd-code">sudo apt install -y google-chrome-stable</pre>
+  </div>
+
+  <!-- Passo 7 -->
+  <div class="cmd-block">
+    <div class="cmd-header">
+      <div class="cmd-header-left">
+        <span class="cmd-step">Passo 7</span>
+        <span class="cmd-title">Verificar a versão instalada</span>
+      </div>
+      <button class="btn-copy" onclick="copiarComando(this)">Copiar</button>
+    </div>
+    <pre class="cmd-code">google-chrome --version</pre>
+  </div>
+
+  <!-- Passo 8 -->
+  <div class="cmd-block">
+    <div class="cmd-header">
+      <div class="cmd-header-left">
+        <span class="cmd-step">Passo 8</span>
+        <span class="cmd-title">Localizar o executável</span>
+      </div>
+      <button class="btn-copy" onclick="copiarComando(this)">Copiar</button>
+    </div>
+    <pre class="cmd-code">which google-chrome</pre>
+  </div>
+
+  <!-- Passo 9 -->
+  <div class="cmd-block">
+    <div class="cmd-header">
+      <div class="cmd-header-left">
+        <span class="cmd-step">Passo 9</span>
+        <span class="cmd-title">Iniciar o Google Chrome</span>
+      </div>
+      <button class="btn-copy" onclick="copiarComando(this)">Copiar</button>
+    </div>
+    <pre class="cmd-code">google-chrome &</pre>
+  </div>
+
+</main>
+
+<footer>ACMR Suporte de TI &middot; Rio de Janeiro &middot; RJ</footer>
+
+<script>
+function copiarComando(btn) {
+  var code = btn.closest('.cmd-block').querySelector('.cmd-code');
+  navigator.clipboard.writeText(code.textContent.trim()).then(function () {
+    btn.textContent = 'Copiado!';
+    btn.classList.add('copied');
+    setTimeout(function () {
+      btn.textContent = 'Copiar';
+      btn.classList.remove('copied');
+    }, 2000);
+  });
+}
+</script>
+
+</body>
+</html>

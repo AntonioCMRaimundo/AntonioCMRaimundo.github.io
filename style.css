@@ -1,0 +1,298 @@
+:root {
+  --primary: #12376B;
+  --accent:  #F0BC00;
+  --text:    #333;
+  --bg:      #f4f6f9;
+  --white:   #fff;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: system-ui, Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── Header ── */
+header {
+  background: var(--primary);
+  padding: 0 2rem;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  text-decoration: none;
+  padding: 0.75rem 0;
+}
+
+.logo-block {
+  background: var(--accent);
+  color: var(--primary);
+  font-weight: 900;
+  font-size: 1rem;
+  line-height: 1.15;
+  padding: 0.3rem 0.55rem;
+  text-align: center;
+  border-radius: 3px;
+}
+
+.logo-name {
+  color: var(--white);
+  font-size: 1.05rem;
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.logo-name span {
+  display: block;
+  font-size: 0.78rem;
+  font-weight: 400;
+  opacity: 0.8;
+}
+
+nav {
+  margin-left: auto;
+  display: flex;
+  gap: 0.2rem;
+  flex-wrap: wrap;
+  padding: 0.5rem 0;
+}
+
+nav a {
+  color: var(--white);
+  text-decoration: none;
+  padding: 0.45rem 0.85rem;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  transition: background 0.2s, color 0.2s;
+}
+
+nav a:hover,
+nav a.active {
+  background: rgba(240,188,0,0.2);
+  color: var(--accent);
+}
+
+/* ── Main ── */
+main {
+  flex: 1;
+  padding: 2rem;
+  max-width: 900px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+h1 {
+  color: var(--primary);
+  font-size: 1.75rem;
+  margin-bottom: 1.25rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 3px solid var(--accent);
+}
+
+h2 {
+  color: var(--primary);
+  font-size: 1.2rem;
+  margin: 1.75rem 0 0.75rem;
+}
+
+p { line-height: 1.7; margin-bottom: 0.75rem; }
+
+/* ── Footer ── */
+footer {
+  background: var(--primary);
+  color: rgba(255,255,255,0.7);
+  text-align: center;
+  padding: 1rem 2rem;
+  font-size: 0.85rem;
+}
+
+/* ── Cards ── */
+.card {
+  background: var(--white);
+  border-radius: 8px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+  margin-bottom: 1.5rem;
+}
+
+/* ── Contato ── */
+.contact-list { list-style: none; }
+
+.contact-list li {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.65rem 0;
+  border-bottom: 1px solid #eee;
+  font-size: 0.97rem;
+}
+
+.contact-list li:last-child { border-bottom: none; }
+
+.contact-label {
+  font-weight: 700;
+  color: var(--primary);
+  min-width: 110px;
+}
+
+.contact-list a { color: var(--primary); text-decoration: none; }
+.contact-list a:hover { text-decoration: underline; }
+
+/* ── Botões ── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.8rem 1.6rem;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  border: none;
+  transition: opacity 0.2s, transform 0.1s;
+}
+
+.btn:hover { opacity: 0.88; transform: translateY(-1px); }
+.btn:active { transform: translateY(0); }
+
+.btn-primary { background: var(--primary); color: var(--white); }
+.btn-accent  { background: var(--accent);  color: var(--primary); }
+
+.support-buttons {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-top: 1.25rem;
+}
+
+/* ── Lista de procedimentos ── */
+.proc-section { margin-bottom: 2rem; }
+
+.proc-list { list-style: none; }
+
+.proc-list li { border-bottom: 1px solid #eee; }
+
+.proc-list a {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 0.5rem;
+  color: var(--primary);
+  text-decoration: none;
+  font-size: 0.95rem;
+  border-radius: 4px;
+  transition: background 0.2s, padding-left 0.2s;
+}
+
+.proc-list a:hover { background: #eef2fa; padding-left: 1rem; }
+
+.badge {
+  background: var(--accent);
+  color: var(--primary);
+  font-size: 0.72rem;
+  font-weight: 800;
+  padding: 0.15rem 0.5rem;
+  border-radius: 3px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+/* ── Breadcrumb ── */
+.breadcrumb {
+  font-size: 0.83rem;
+  color: #888;
+  margin-bottom: 1.5rem;
+}
+
+.breadcrumb a { color: var(--primary); text-decoration: none; }
+.breadcrumb a:hover { text-decoration: underline; }
+.breadcrumb span { margin: 0 0.4rem; }
+
+/* ── Blocos de comando ── */
+.cmd-block {
+  background: #1a1b2e;
+  border-radius: 8px;
+  margin: 1rem 0;
+  overflow: hidden;
+  border: 1px solid #2a2b42;
+}
+
+.cmd-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #22233a;
+  padding: 0.5rem 1rem;
+}
+
+.cmd-step {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.cmd-title {
+  font-size: 0.82rem;
+  color: #9ca3af;
+  margin-left: 0.5rem;
+}
+
+.cmd-header-left { display: flex; align-items: center; gap: 0.25rem; }
+
+.btn-copy {
+  background: var(--primary);
+  color: var(--white);
+  border: none;
+  padding: 0.25rem 0.8rem;
+  border-radius: 4px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn-copy:hover  { background: #1a4e99; }
+.btn-copy.copied { background: #2e7d32; }
+
+.cmd-code {
+  padding: 1rem 1.25rem;
+  font-family: 'Courier New', 'Consolas', monospace;
+  font-size: 0.88rem;
+  color: #e2e8f0;
+  white-space: pre;
+  overflow-x: auto;
+  line-height: 1.6;
+}
+
+/* ── Placeholder ── */
+.placeholder {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: #888;
+}
+
+.placeholder-icon { font-size: 3rem; margin-bottom: 1rem; }
+
+/* ── Responsivo ── */
+@media (max-width: 620px) {
+  header { padding: 0 1rem; }
+  main   { padding: 1.5rem 1rem; }
+  nav    { margin-left: 0; width: 100%; }
+  .support-buttons { flex-direction: column; }
+  .btn   { width: 100%; justify-content: center; }
+  .contact-label { min-width: 80px; }
+}
