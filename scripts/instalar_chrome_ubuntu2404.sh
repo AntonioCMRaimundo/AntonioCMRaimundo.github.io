@@ -91,8 +91,8 @@ printf '%s\n' 'Types: deb' 'URIs: https://dl.google.com/linux/chrome/deb/' 'Suit
 ok "Repositório configurado."
 
 step "Passo 5/6 — Atualizando APT com novo repositório..."
-apt-get update -qq
-CANDIDATO=$(apt-cache policy google-chrome-stable 2>/dev/null | grep "Candidate:" | awk '{print $2}')
+apt-get update -qq || true
+CANDIDATO=$(apt-cache policy google-chrome-stable 2>/dev/null | grep "Candidate:" | awk '{print $2}' || true)
 if [[ -z "$CANDIDATO" ]]; then
     erro "Pacote google-chrome-stable não encontrado."
     exit 1
