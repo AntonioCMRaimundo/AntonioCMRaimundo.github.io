@@ -87,7 +87,7 @@ ok "Repositório configurado em: ${SOURCE_FILE}"
 
 step "Passo 5/6 — Atualizando APT com novo repositório..."
 apt-get update -qq || true
-CANDIDATO=$(apt-cache policy microsoft-edge-stable 2>/dev/null | grep "Candidate:" | awk '{print $2}' || true)
+CANDIDATO=$(LANG=C apt-cache policy microsoft-edge-stable 2>/dev/null | grep "Candidate:" | awk '{print $2}' || true)
 if [[ -z "$CANDIDATO" ]]; then
     erro "Pacote microsoft-edge-stable não encontrado."
     exit 1

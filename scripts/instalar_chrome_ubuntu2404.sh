@@ -92,7 +92,7 @@ ok "Repositório configurado."
 
 step "Passo 5/6 — Atualizando APT com novo repositório..."
 apt-get update -qq || true
-CANDIDATO=$(apt-cache policy google-chrome-stable 2>/dev/null | grep "Candidate:" | awk '{print $2}' || true)
+CANDIDATO=$(LANG=C apt-cache policy google-chrome-stable 2>/dev/null | grep "Candidate:" | awk '{print $2}' || true)
 if [[ -z "$CANDIDATO" ]]; then
     erro "Pacote google-chrome-stable não encontrado."
     exit 1
