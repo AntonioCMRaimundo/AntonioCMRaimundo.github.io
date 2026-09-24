@@ -72,7 +72,7 @@ apt-get update -qq
 ok "Lista de pacotes atualizada."
 
 step "Passo 2/6 — Instalando dependências..."
-apt-get install -y -qq ca-certificates curl
+apt-get install -y -qq ca-certificates
 ok "Dependências instaladas."
 
 step "Passo 3/6 — Importando chave GPG do Google..."
