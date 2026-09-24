@@ -37,15 +37,6 @@ Criado em 24/09/2026 10:21 (BRT) a partir da conversa "ACMR - raimundo.com.br vi
 - Usar `|| true` onde um retorno não-zero é esperado e tratado.
 - Nunca adicionar usuários ao grupo sudo.
 
-## Histórico relevante
-- Script do Edge validado de ponta a ponta em Ubuntu 24.04.4 em português (06/06/2026).
-- Script do Chrome corrigido com LANG=C, ainda não re-executado depois da correção.
-- suporte.raimundo.com.br e consultoria.raimundo.com.br têm CNAME para antoniocmraimundo.github.io, mas o GitHub Pages aceita um só domínio por site: em 24/09/2026 ambos retornavam 404 (HTTP) e falha de HTTPS.
-
-## Pendências (em 24/09/2026)
-1. Decidir o destino de suporte. e consultoria. (repositórios próprios só com redirecionamento, ou remover os CNAMEs).
-2. Página Referências Rápidas: ainda "em construção" (tomadas, ferramentas).
-3. Procedimentos de Windows e de Redes/Ubiquiti.
-4. Script de criação de usuários comuns (sem sudo, senha criada pelo próprio usuário no 1º login via `passwd --expire`), com modos: interativo, CSV com confirmação, linha única e detecção automática.
-5. Re-executar o script do Chrome num Ubuntu limpo para validar o LANG=C.
-6. Procedimento TeamViewer Terminal Remoto: só publicar depois de resolver a divergência de licença (documentação exige Premium/Corporate/Tensor; na prática funciona com Business).
+## Notas internas (privadas)
+@C:\Users\anton\OneDrive\Documentos\Claude\Projects\Programação\acmr-site\notas-internas.md
+Pendências e histórico ficam nesse arquivo, fora do repositório. Sempre atualizar lá, nunca no CLAUDE.md.
