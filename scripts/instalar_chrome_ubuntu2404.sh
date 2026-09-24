@@ -56,7 +56,7 @@ if command -v google-chrome &>/dev/null; then
 fi
 
 info "Verificando conectividade com dl.google.com..."
-if ! curl -fsSL --max-time 10 --head "https://dl.google.com" &>/dev/null; then
+if ! wget --spider --timeout=10 -q "https://dl.google.com"; then
     erro "Sem acesso a dl.google.com. Verifique a conexão com a internet."
     exit 1
 fi
@@ -77,7 +77,7 @@ ok "Dependências instaladas."
 
 step "Passo 3/6 — Importando chave GPG do Google..."
 KEYRING_FILE="/usr/share/keyrings/google-chrome.gpg"
-curl -fsSL https://dl.google.com/linux/linux_signing_key.pub | gpg --dearmor --yes -o "$KEYRING_FILE"
+wget -qO- https://dl.google.com/linux/linux_signing_key.pub | gpg --dearmor --yes -o "$KEYRING_FILE"
 ok "Chave GPG salva em: ${KEYRING_FILE}"
 
 step "Passo 4/6 — Adicionando repositório do Google Chrome..."

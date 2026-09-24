@@ -56,7 +56,7 @@ if command -v microsoft-edge &>/dev/null; then
 fi
 
 info "Verificando conectividade com packages.microsoft.com..."
-if ! curl -fsSL --max-time 10 --head "https://packages.microsoft.com" &>/dev/null; then
+if ! wget --spider --timeout=10 -q "https://packages.microsoft.com"; then
     erro "Sem acesso a packages.microsoft.com. Verifique a conexão com a internet."
     exit 1
 fi
@@ -77,7 +77,7 @@ ok "Dependências instaladas."
 
 step "Passo 3/6 — Importando chave GPG da Microsoft..."
 KEYRING_FILE="/usr/share/keyrings/microsoft-edge.gpg"
-curl -fsSL https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor --yes -o "$KEYRING_FILE"
+wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor --yes -o "$KEYRING_FILE"
 ok "Chave GPG salva em: ${KEYRING_FILE}"
 
 step "Passo 4/6 — Adicionando repositório do Microsoft Edge..."
