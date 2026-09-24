@@ -1,4 +1,0 @@
-# Configuração do GitHub Pages (Jekyll)
-# Arquivos que NÃO devem ser publicados no site.
-exclude:
-  - CLAUDE.md
