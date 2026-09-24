@@ -13,8 +13,8 @@ separador(){ echo -e "${BLUE}─────────────────
 clear
 echo -e "${BOLD}${WHITE}"
 echo "  ╔═══════════════════════════════════════════════════════╗"
-echo "  ║       Instalação do Google Chrome — Ubuntu 24.04      ║"
-echo "  ║          Canal Stable · Repositório APT oficial        ║"
+echo "  ║  Instalação do Microsoft Edge — Ubuntu 24.04 / 26.04  ║"
+echo "  ║       Canal Stable · Repositório APT oficial           ║"
 echo "  ║                  ACMR Consultoria                      ║"
 echo "  ╚═══════════════════════════════════════════════════════╝"
 echo -e "${RESET}"
@@ -32,7 +32,7 @@ ok "Executando com privilégios de superusuário."
 ARCH=$(dpkg --print-architecture)
 if [[ "$ARCH" != "amd64" ]]; then
     erro "Arquitetura não suportada: ${ARCH}"
-    warn "O Google Chrome para Linux só está disponível para amd64 (x86_64)."
+    warn "O Microsoft Edge para Linux só está disponível para amd64 (x86_64)."
     exit 1
 fi
 ok "Arquitetura: ${ARCH} — compatível."
@@ -47,17 +47,17 @@ fi
 DISTRO_NAME=$(grep "^PRETTY_NAME" /etc/os-release | cut -d= -f2 | tr -d '"')
 ok "Distribuição: ${DISTRO_NAME}"
 
-if command -v google-chrome &>/dev/null; then
-    VERSAO_ATUAL=$(google-chrome --version 2>/dev/null)
-    warn "Google Chrome já está instalado: ${VERSAO_ATUAL}"
+if command -v microsoft-edge &>/dev/null; then
+    VERSAO_ATUAL=$(microsoft-edge --version 2>/dev/null)
+    warn "Microsoft Edge já está instalado: ${VERSAO_ATUAL}"
     echo -n -e "  ${YELLOW}Deseja reinstalar / atualizar? [s/N]:${RESET} "
     read -r RESPOSTA
     [[ "$RESPOSTA" =~ ^[sS]$ ]] || { info "Instalação cancelada pelo usuário."; exit 0; }
 fi
 
-info "Verificando conectividade com dl.google.com..."
-if ! wget --spider --timeout=10 -q "https://dl.google.com"; then
-    erro "Sem acesso a dl.google.com. Verifique a conexão com a internet."
+info "Verificando conectividade com packages.microsoft.com..."
+if ! wget --spider --timeout=10 -q "https://packages.microsoft.com"; then
+    erro "Sem acesso a packages.microsoft.com. Verifique a conexão com a internet."
     exit 1
 fi
 ok "Conectividade confirmada."
@@ -75,41 +75,36 @@ step "Passo 2/6 — Instalando dependências..."
 apt-get install -y -qq ca-certificates
 ok "Dependências instaladas."
 
-step "Passo 3/6 — Importando chave GPG do Google..."
-KEYRING_FILE="/usr/share/keyrings/google-chrome.gpg"
-wget -qO- https://dl.google.com/linux/linux_signing_key.pub | gpg --dearmor --yes -o "$KEYRING_FILE"
+step "Passo 3/6 — Importando chave GPG da Microsoft..."
+KEYRING_FILE="/usr/share/keyrings/microsoft-edge.gpg"
+wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor --yes -o "$KEYRING_FILE"
 ok "Chave GPG salva em: ${KEYRING_FILE}"
 
-step "Passo 4/6 — Adicionando repositório do Google Chrome..."
-SOURCE_FILE="/etc/apt/sources.list.d/google-chrome.sources"
-CONFLITOS=$(grep -Ril "dl.google.com/linux/chrome/deb" /etc/apt/sources.list.d 2>/dev/null || true)
-if [[ -n "$CONFLITOS" && "$CONFLITOS" != "$SOURCE_FILE" ]]; then
-    warn "Removendo arquivos conflitantes..."
-    echo "$CONFLITOS" | xargs rm -f
-fi
-printf '%s\n' 'Types: deb' 'URIs: https://dl.google.com/linux/chrome/deb/' 'Suites: stable' 'Components: main' 'Architectures: amd64' "Signed-By: ${KEYRING_FILE}" > "$SOURCE_FILE"
-ok "Repositório configurado."
+step "Passo 4/6 — Adicionando repositório do Microsoft Edge..."
+SOURCE_FILE="/etc/apt/sources.list.d/microsoft-edge.sources"
+printf '%s\n' 'Types: deb' 'URIs: https://packages.microsoft.com/repos/edge' 'Suites: stable' 'Components: main' 'Architectures: amd64' "Signed-By: ${KEYRING_FILE}" > "$SOURCE_FILE"
+ok "Repositório configurado em: ${SOURCE_FILE}"
 
 step "Passo 5/6 — Atualizando APT com novo repositório..."
 apt-get update -qq || true
-CANDIDATO=$(LANG=C apt-cache policy google-chrome-stable 2>/dev/null | grep "Candidate:" | awk '{print $2}' || true)
+CANDIDATO=$(LANG=C apt-cache policy microsoft-edge-stable 2>/dev/null | grep "Candidate:" | awk '{print $2}' || true)
 if [[ -z "$CANDIDATO" ]]; then
-    erro "Pacote google-chrome-stable não encontrado."
+    erro "Pacote microsoft-edge-stable não encontrado."
     exit 1
 fi
 ok "Versão candidata: ${CANDIDATO}"
 
-step "Passo 6/6 — Instalando Google Chrome Stable..."
-apt-get install -y google-chrome-stable
+step "Passo 6/6 — Instalando Microsoft Edge Stable..."
+apt-get install -y microsoft-edge-stable
 
 separador
 step "Validando instalação..."
-if command -v google-chrome &>/dev/null; then
-    VERSAO=$(google-chrome --version 2>/dev/null)
-    ok "Google Chrome instalado com sucesso!"
+if command -v microsoft-edge &>/dev/null; then
+    VERSAO=$(microsoft-edge --version 2>/dev/null)
+    ok "Microsoft Edge instalado com sucesso!"
     echo -e "  ${GREEN}Versão: ${VERSAO}${RESET}"
 else
-    erro "Google Chrome não encontrado após instalação."
+    erro "Microsoft Edge não encontrado após instalação."
     exit 1
 fi
 
@@ -119,7 +114,7 @@ echo "  ╔═══════════════════════
 echo "  ║              Instalação concluída com êxito!          ║"
 echo "  ╚═══════════════════════════════════════════════════════╝"
 echo -e "${RESET}"
-echo -e "  Terminal : ${CYAN}google-chrome${RESET}"
-echo -e "  Workspace: Activities → Google Chrome"
-echo -e "  Atualizar: ${CYAN}sudo apt update && sudo apt upgrade google-chrome-stable -y${RESET}"
+echo -e "  Terminal : ${CYAN}microsoft-edge${RESET}"
+echo -e "  Workspace: Activities → Microsoft Edge"
+echo -e "  Atualizar: ${CYAN}sudo apt update && sudo apt upgrade microsoft-edge-stable -y${RESET}"
 separador
