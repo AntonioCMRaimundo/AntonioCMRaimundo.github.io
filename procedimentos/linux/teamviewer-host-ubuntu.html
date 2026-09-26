@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ubuntu - Instalação do Microsoft Edge · ACMR</title>
+  <title>Ubuntu - Instalação do TeamViewer Host · ACMR</title>
   <link rel="stylesheet" href="../../style.css">
 </head>
 <body>
@@ -27,14 +27,18 @@
     <span>›</span>
     <a href="../../procedimentos.html">Linux</a>
     <span>›</span>
-    Microsoft Edge
+    TeamViewer Host
   </div>
 
-  <h1>Ubuntu - Instalação do Microsoft Edge</h1>
+  <h1>Ubuntu - Instalação do TeamViewer Host</h1>
 
   <div class="card" style="margin-bottom:1.5rem;">
-    <p>Instalação do Microsoft Edge via repositório APT oficial da Microsoft (<code>packages.microsoft.com</code>), garantindo atualizações automáticas via <code>apt</code>.</p>
+    <p>Instalação do TeamViewer Host via pacote oficial <code>.deb</code>, para acesso remoto não assistido, sem interface gráfica.</p>
     <p><strong>Requisitos:</strong> Ubuntu 24.04 LTS (Noble Numbat) ou 26.04 LTS (Resolute Raccoon) · 64 bits · acesso <code>sudo</code></p>
+  </div>
+
+  <div class="card" style="margin-bottom:1.5rem; border-left:4px solid var(--accent);">
+    <p><strong>Atenção:</strong> o TeamViewer completo e o TeamViewer Host não podem conviver no mesmo sistema. Se o TeamViewer completo já estiver instalado, remova-o antes com <code>sudo apt remove teamviewer</code>.</p>
   </div>
 
   <!-- Passo 1 -->
@@ -54,11 +58,11 @@
     <div class="cmd-header">
       <div class="cmd-header-left">
         <span class="cmd-step">Passo 2</span>
-        <span class="cmd-title">Instalar dependências</span>
+        <span class="cmd-title">Baixar o pacote do TeamViewer Host</span>
       </div>
       <button class="btn-copy" onclick="copiarComando(this)">Copiar</button>
     </div>
-    <pre class="cmd-code">sudo apt install ca-certificates curl -y</pre>
+    <pre class="cmd-code">wget -O teamviewer-host_amd64.deb https://download.teamviewer.com/download/linux/teamviewer-host_amd64.deb</pre>
   </div>
 
   <!-- Passo 3 -->
@@ -66,11 +70,11 @@
     <div class="cmd-header">
       <div class="cmd-header-left">
         <span class="cmd-step">Passo 3</span>
-        <span class="cmd-title">Importar chave GPG da Microsoft</span>
+        <span class="cmd-title">Instalar o pacote</span>
       </div>
       <button class="btn-copy" onclick="copiarComando(this)">Copiar</button>
     </div>
-    <pre class="cmd-code">curl -fsSL https://packages.microsoft.com/keys/microsoft.asc | sudo gpg --dearmor --yes -o /usr/share/keyrings/microsoft-edge.gpg</pre>
+    <pre class="cmd-code">sudo apt install ./teamviewer-host_amd64.deb -y</pre>
   </div>
 
   <!-- Passo 4 -->
@@ -78,11 +82,11 @@
     <div class="cmd-header">
       <div class="cmd-header-left">
         <span class="cmd-step">Passo 4</span>
-        <span class="cmd-title">Adicionar repositório oficial do Microsoft Edge</span>
+        <span class="cmd-title">Verificar se o serviço está ativo</span>
       </div>
       <button class="btn-copy" onclick="copiarComando(this)">Copiar</button>
     </div>
-    <pre class="cmd-code">printf '%s\n' 'Types: deb' 'URIs: https://packages.microsoft.com/repos/edge' 'Suites: stable' 'Components: main' 'Architectures: amd64' 'Signed-By: /usr/share/keyrings/microsoft-edge.gpg' | sudo tee /etc/apt/sources.list.d/microsoft-edge.sources > /dev/null</pre>
+    <pre class="cmd-code">systemctl status teamviewerd</pre>
   </div>
 
   <!-- Passo 5 -->
@@ -90,66 +94,18 @@
     <div class="cmd-header">
       <div class="cmd-header-left">
         <span class="cmd-step">Passo 5</span>
-        <span class="cmd-title">Atualizar APT com novo repositório</span>
+        <span class="cmd-title">Verificar o ID do TeamViewer (necessário para conexão remota)</span>
       </div>
       <button class="btn-copy" onclick="copiarComando(this)">Copiar</button>
     </div>
-    <pre class="cmd-code">sudo apt update</pre>
-  </div>
-
-  <!-- Passo 6 -->
-  <div class="cmd-block">
-    <div class="cmd-header">
-      <div class="cmd-header-left">
-        <span class="cmd-step">Passo 6</span>
-        <span class="cmd-title">Verificar se o pacote está disponível</span>
-      </div>
-      <button class="btn-copy" onclick="copiarComando(this)">Copiar</button>
-    </div>
-    <pre class="cmd-code">apt-cache policy microsoft-edge-stable</pre>
-  </div>
-
-  <!-- Passo 7 -->
-  <div class="cmd-block">
-    <div class="cmd-header">
-      <div class="cmd-header-left">
-        <span class="cmd-step">Passo 7</span>
-        <span class="cmd-title">Instalar o Microsoft Edge</span>
-      </div>
-      <button class="btn-copy" onclick="copiarComando(this)">Copiar</button>
-    </div>
-    <pre class="cmd-code">sudo apt install microsoft-edge-stable -y</pre>
-  </div>
-
-  <!-- Passo 8 -->
-  <div class="cmd-block">
-    <div class="cmd-header">
-      <div class="cmd-header-left">
-        <span class="cmd-step">Passo 8</span>
-        <span class="cmd-title">Verificar versão instalada</span>
-      </div>
-      <button class="btn-copy" onclick="copiarComando(this)">Copiar</button>
-    </div>
-    <pre class="cmd-code">microsoft-edge --version</pre>
-  </div>
-
-  <!-- Passo 9 -->
-  <div class="cmd-block">
-    <div class="cmd-header">
-      <div class="cmd-header-left">
-        <span class="cmd-step">Passo 9</span>
-        <span class="cmd-title">Iniciar o Microsoft Edge</span>
-      </div>
-      <button class="btn-copy" onclick="copiarComando(this)">Copiar</button>
-    </div>
-    <pre class="cmd-code">microsoft-edge</pre>
+    <pre class="cmd-code">sudo teamviewer info</pre>
   </div>
 
   <!-- Instalação automática -->
   <h2>Instalação automática via script</h2>
 
   <div class="card" style="margin-bottom:1rem;">
-    <p>Baixe e execute o script para instalar o Edge automaticamente, sem copiar e colar comandos.</p>
+    <p>Baixe e execute o script para instalar o TeamViewer Host automaticamente, sem copiar e colar comandos.</p>
   </div>
 
   <div class="cmd-block">
@@ -160,7 +116,7 @@
       </div>
       <button class="btn-copy" onclick="copiarComando(this)">Copiar</button>
     </div>
-    <pre class="cmd-code">wget -qO- https://ti.raimundo.com.br/scripts/instalar_edge_ubuntu.sh | sudo bash</pre>
+    <pre class="cmd-code">wget -qO- https://ti.raimundo.com.br/scripts/instalar_teamviewer_host_ubuntu.sh | sudo bash</pre>
   </div>
 
   <div class="card" style="margin-top:0.75rem; border-left:4px solid var(--accent);">
@@ -173,8 +129,8 @@
   <div class="card" style="margin-bottom:1rem;">
     <p>Alternativa: baixe o script e execute pelo terminal local. Útil se preferir conferir o conteúdo antes de executar.</p>
     <div class="support-buttons">
-      <a class="btn btn-primary" href="/scripts/instalar_edge_ubuntu.sh" download>
-        &#8595; Baixar instalar_edge_ubuntu.sh
+      <a class="btn btn-primary" href="/scripts/instalar_teamviewer_host_ubuntu.sh" download>
+        &#8595; Baixar instalar_teamviewer_host_ubuntu.sh
       </a>
     </div>
   </div>
@@ -187,7 +143,7 @@
       </div>
       <button class="btn-copy" onclick="copiarComando(this)">Copiar</button>
     </div>
-    <pre class="cmd-code">sudo bash ~/Downloads/instalar_edge_ubuntu.sh</pre>
+    <pre class="cmd-code">sudo bash ~/Downloads/instalar_teamviewer_host_ubuntu.sh</pre>
   </div>
 
   <div class="card" style="margin-top:0.75rem; border-left:4px solid var(--accent);">

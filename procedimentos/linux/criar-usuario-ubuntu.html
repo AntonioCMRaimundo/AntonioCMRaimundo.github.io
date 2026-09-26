@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ubuntu - Criação de Usuários Comuns · ACMR</title>
+  <link rel="stylesheet" href="../../style.css">
+</head>
+<body>
+
+<header>
+  <a class="logo" href="../../index.html">
+    <img src="../../logo_ACMR.jpg" alt="ACMR Consultoria" height="48" style="border-radius:4px;">
+    <div class="logo-name">ACMR<span>Consultoria</span></div>
+  </a>
+  <nav>
+    <a href="../../index.html">Início</a>
+    <a href="../../suporte-remoto.html">Suporte Remoto</a>
+    <a href="../../procedimentos.html" class="active">Procedimentos</a>
+    <a href="../../referencias.html">Referências</a>
+  </nav>
+</header>
+
+<main>
+  <div class="breadcrumb">
+    <a href="../../procedimentos.html">Procedimentos</a>
+    <span>›</span>
+    <a href="../../procedimentos.html">Linux</a>
+    <span>›</span>
+    Criação de Usuários
+  </div>
+
+  <h1>Ubuntu - Criação de Usuários Comuns</h1>
+
+  <div class="card" style="margin-bottom:1.5rem;">
+    <p>O script cria contas de usuário comuns, sem privilégios de administrador (<code>sudo</code>). Cada conta recebe uma senha temporária aleatória, que expira imediatamente: o próprio usuário define a senha definitiva no primeiro login.</p>
+    <p><strong>Requisitos:</strong> Ubuntu 24.04 LTS ou 26.04 LTS · acesso <code>sudo</code></p>
+  </div>
+
+  <div class="card" style="margin-bottom:1.5rem; border-left:4px solid var(--accent);">
+    <p><strong>Segurança:</strong> o script <strong>nunca</strong> adiciona o novo usuário ao grupo <code>sudo</code>, em nenhum modo. Se <code>sudo</code> aparecer na lista de grupos extras, ele é ignorado e o script emite um aviso.</p>
+  </div>
+
+  <div class="card" style="margin-bottom:1.5rem; border-left:4px solid var(--accent);">
+    <p><strong>Senha temporária:</strong> é exibida uma única vez na tela, junto com o login, ao final da criação de cada usuário. Ela não é gravada em arquivo nem registrada em log. Anote-a e repasse-a ao usuário.</p>
+  </div>
+
+  <!-- Modos de operação -->
+  <h2>Modos de operação</h2>
+
+  <div class="card" style="margin-bottom:1rem;">
+    <p>Execute os comandos a partir da pasta onde o script foi baixado (por exemplo, <code>cd ~/Downloads</code>). O script está disponível na seção "Baixar o script" mais abaixo.</p>
+  </div>
+
+  <!-- Modo 1 -->
+  <div class="cmd-block">
+    <div class="cmd-header">
+      <div class="cmd-header-left">
+        <span class="cmd-step">Modo 1</span>
+        <span class="cmd-title">Interativo</span>
+      </div>
+      <button class="btn-copy" onclick="copiarComando(this)">Copiar</button>
+    </div>
+    <pre class="cmd-code">sudo bash criar_usuario_ubuntu.sh --interativo</pre>
+  </div>
+
+  <div class="card" style="margin-top:0.75rem; margin-bottom:1.5rem; border-left:4px solid var(--accent);">
+    <p><strong>Nota:</strong> O script pergunta o nome completo, sugere um login (primeira letra do primeiro nome + sobrenome, minúsculo e sem acento), pergunta os grupos extras (opcional) e pede confirmação antes de criar a conta.</p>
+  </div>
+
+  <!-- Modo 2 -->
+  <div class="cmd-block">
+    <div class="cmd-header">
+      <div class="cmd-header-left">
+        <span class="cmd-step">Modo 2</span>
+        <span class="cmd-title">CSV com confirmação</span>
+      </div>
+      <button class="btn-copy" onclick="copiarComando(this)">Copiar</button>
+    </div>
+    <pre class="cmd-code">sudo bash criar_usuario_ubuntu.sh --csv usuarios.csv</pre>
+  </div>
+
+  <div class="card" style="margin-top:0.75rem; margin-bottom:1rem; border-left:4px solid var(--accent);">
+    <p><strong>Nota:</strong> O script lê o arquivo inteiro, lista todos os usuários que serão criados (nome, login e grupos) e pede uma única confirmação. Depois processa linha a linha: se uma linha falhar (por exemplo, login já existente), ela é ignorada e as demais continuam. Formato: <code>nome_completo,login,grupos_extras</code>, com cabeçalho opcional e grupos separados por <code>;</code> dentro do campo.</p>
+  </div>
+
+  <div class="cmd-block">
+    <div class="cmd-header">
+      <div class="cmd-header-left">
+        <span class="cmd-step">Arquivo</span>
+        <span class="cmd-title">Exemplo de usuarios.csv</span>
+      </div>
+      <button class="btn-copy" onclick="copiarComando(this)">Copiar</button>
+    </div>
+    <pre class="cmd-code">nome_completo,login,grupos_extras
+Maria Souza,msouza,audio;video
+João da Silva,jsilva,
+Carlos Lima,clima,plugdev</pre>
+  </div>
+
+  <div class="card" style="margin-top:0.75rem; margin-bottom:1.5rem; border-left:4px solid var(--accent);">
+    <p><strong>Nota:</strong> Os campos não aceitam vírgula dentro do valor. Linhas em branco e linhas iniciadas por <code>#</code> são ignoradas. Grupos que não existem no sistema são ignorados com aviso.</p>
+  </div>
+
+  <!-- Modo 3 -->
+  <div class="cmd-block">
+    <div class="cmd-header">
+      <div class="cmd-header-left">
+        <span class="cmd-step">Modo 3</span>
+        <span class="cmd-title">Linha única</span>
+      </div>
+      <button class="btn-copy" onclick="copiarComando(this)">Copiar</button>
+    </div>
+    <pre class="cmd-code">sudo bash criar_usuario_ubuntu.sh msouza "Maria Souza" "audio;video"</pre>
+  </div>
+
+  <div class="card" style="margin-top:0.75rem; margin-bottom:1.5rem; border-left:4px solid var(--accent);">
+    <p><strong>Nota:</strong> Formato: <code>&lt;login&gt; ["Nome Completo"] [grupos_extras]</code>. Só o login é obrigatório: se o nome for omitido, o login é usado como nome; se os grupos forem omitidos, nenhum grupo extra é aplicado (use <code>;</code> para separar mais de um). Não há confirmação adicional.</p>
+  </div>
+
+  <!-- Modo 4 -->
+  <div class="cmd-block">
+    <div class="cmd-header">
+      <div class="cmd-header-left">
+        <span class="cmd-step">Modo 4</span>
+        <span class="cmd-title">Detecção automática (sem argumentos)</span>
+      </div>
+      <button class="btn-copy" onclick="copiarComando(this)">Copiar</button>
+    </div>
+    <pre class="cmd-code">sudo bash criar_usuario_ubuntu.sh</pre>
+  </div>
+
+  <div class="card" style="margin-top:0.75rem; border-left:4px solid var(--accent);">
+    <p><strong>Nota:</strong> Sem argumentos, o script procura o arquivo <code>usuarios.csv</code> na mesma pasta em que o script está. Se encontrar, usa o modo 2 (CSV com confirmação); se não encontrar, usa o modo 1 (interativo).</p>
+  </div>
+
+  <!-- Download direto -->
+  <h2>Baixar o script</h2>
+
+  <div class="card" style="margin-bottom:1rem;">
+    <p>Baixe o script e execute pelo terminal local. Como o script pode pedir dados durante a execução (modo interativo) e cria contas no sistema, não é executado direto pela internet: baixe e confira o conteúdo antes de executar.</p>
+    <div class="support-buttons">
+      <a class="btn btn-primary" href="/scripts/criar_usuario_ubuntu.sh" download>
+        &#8595; Baixar criar_usuario_ubuntu.sh
+      </a>
+    </div>
+  </div>
+
+  <div class="cmd-block">
+    <div class="cmd-header">
+      <div class="cmd-header-left">
+        <span class="cmd-step">Terminal</span>
+        <span class="cmd-title">Executar o script baixado</span>
+      </div>
+      <button class="btn-copy" onclick="copiarComando(this)">Copiar</button>
+    </div>
+    <pre class="cmd-code">sudo bash ~/Downloads/criar_usuario_ubuntu.sh</pre>
+  </div>
+
+  <div class="card" style="margin-top:0.75rem; border-left:4px solid var(--accent);">
+    <p><strong>Nota:</strong> Abra o terminal e execute o comando acima. Ajuste o caminho se baixou em outra pasta.</p>
+  </div>
+
+</main>
+
+<footer>ACMR Consultoria &middot; Rio de Janeiro &middot; RJ</footer>
+
+<script>
+function copiarComando(btn) {
+  var code = btn.closest('.cmd-block').querySelector('.cmd-code');
+  navigator.clipboard.writeText(code.textContent.trim()).then(function () {
+    btn.textContent = 'Copiado!';
+    btn.classList.add('copied');
+    setTimeout(function () {
+      btn.textContent = 'Copiar';
+      btn.classList.remove('copied');
+    }, 2000);
+  });
+}
+</script>
+
+</body>
+</html>
